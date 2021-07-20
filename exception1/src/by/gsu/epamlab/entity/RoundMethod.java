@@ -1,24 +1,20 @@
 package by.gsu.epamlab.entity;
 
 public enum RoundMethod {
+
     CEIL {
-        @Override
         double roundFunction(double roundingValue) {
             return Math.ceil(roundingValue);
         }
     },
-
-    ROUND {
-        @Override
-        double roundFunction(double roundingValue) {
-            return Math.round(roundingValue);
-        }
-    },
-
     FLOOR {
-        @Override
         double roundFunction(double roundingValue) {
             return Math.floor(roundingValue);
+        }
+    },
+    ROUND {
+        double roundFunction(double roundingValue) {
+            return Math.round(roundingValue);
         }
     };
 

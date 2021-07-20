@@ -7,18 +7,20 @@ import java.util.Comparator;
 
 public class ComparatorFactory {
 
-    private static final String PACKAGE = "by.gsu.epamlab.comparators.";
-    private static final String ERROR_CREATING_COMP_MESS = "Error creating comparator";
 
-    public static Comparator<Purchase> getComparator(String comparatorVersion) {
+    private static final String PACKAGE = "by.gsu.epamlab.comparators";
+    private static final String POINT = ".";
+    private static final String ERROR_CREATING_COMPARATOR_MESSAGE = "Error creating comparator";
+
+    public static Comparator<Purchase> getComparator(String comparatorVersion){
 
         Comparator<Purchase> comparator = null;
         try {
-            Class cls = Class.forName(PACKAGE + comparatorVersion);
+            Class cls = Class.forName(PACKAGE + POINT + comparatorVersion);
             Constructor constructor = cls.getConstructor();
             comparator = (Comparator<Purchase>) constructor.newInstance();
-        }catch (Exception e) {
-            System.err.println(ERROR_CREATING_COMP_MESS);
+        } catch (Exception e) {
+            System.err.println(ERROR_CREATING_COMPARATOR_MESSAGE);
         }
         return comparator;
     }

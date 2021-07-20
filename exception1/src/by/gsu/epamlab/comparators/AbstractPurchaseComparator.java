@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 public abstract class AbstractPurchaseComparator implements Comparator<Purchase> {
 
+    private static final int NUMBER_NULL = 0;
+
     protected final int PURCHASE_ID = 1;
     protected final int PRICE_DISCOUNT_PURCHASE_ID = 2;
 
@@ -17,7 +19,7 @@ public abstract class AbstractPurchaseComparator implements Comparator<Purchase>
         } else {
             result = o1.getName().length() - o2.getName().length();
         }
-        if (result == 0){
+        if (result == NUMBER_NULL){
             result = o1.getCost().compareTo(o2.getCost());
         }
         return result;
