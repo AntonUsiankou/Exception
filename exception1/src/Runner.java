@@ -1,6 +1,5 @@
-import by.gsu.epamlab.entity.Purchase;
 import by.gsu.epamlab.entity.PurchasesList;
-import by.gsu.epamlab.comparators.ComparatorFactory;
+import by.gsu.epamlab.factories.ComparatorFactory;
 
 public class Runner {
     private static final int NUMBER_NULL = 0;

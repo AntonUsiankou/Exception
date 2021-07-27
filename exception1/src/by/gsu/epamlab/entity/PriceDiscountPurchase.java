@@ -1,16 +1,11 @@
 package by.gsu.epamlab.entity;
 
-import java.util.Formatter;
+import static by.gsu.epamlab.constants.PriceDiscountPurchaseConstants.*;
 
 public class PriceDiscountPurchase extends Purchase {
 
     private Byn priceDiscount;
 
-    private static final int NULL_NUMBER = 0;
-
-    private static final String NON_POSITIVE_VALUE_MES = "non positive value ";
-    private static final String IN_DISCOUNT_MESSAGE = " in discount";
-    private static final String DELEMITER = ";";
     public PriceDiscountPurchase(String productName, int price, int numberUnits, int priceDiscount) {
         super(productName, price, numberUnits);
         setPriceDiscount(priceDiscount);

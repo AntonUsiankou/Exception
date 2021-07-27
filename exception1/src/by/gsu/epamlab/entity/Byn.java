@@ -24,6 +24,53 @@ public class Byn implements Comparable<Byn> {
         return this.value % 100;
     }
 
+    public Byn addition(Byn byn) {
+        return new Byn(this.value += byn.value);
+
+    }
+
+    public Byn subtraction(Byn byn) {
+        return new Byn(this.value -= byn.value);
+    }
+
+    public Byn multiply(int k) {
+        return new Byn(this.value *= k);
+    }
+
+    public Byn multiply(double k, RoundMethod roundMethod, int digits) {
+        return new Byn(this.value = roundMethod.rounding(this.value * k, digits));
+    }
+
+    public Byn multiply(double k, int digits) {
+        return new Byn(multiply(k, RoundMethod.ROUND, digits));
+
+    }
+
+    public Byn multiply(double k) {
+        return new Byn(multiply(k, RoundMethod.ROUND, 0));
+    }
+
+    public Byn multiply(double k, RoundMethod round) {
+        return new Byn(multiply(k, round, 0));
+    }
+
+    public Byn round(RoundMethod round) {
+        return new Byn(round(round, 0));
+    }
+
+    public Byn round(int digits) {
+        return new Byn(round(RoundMethod.ROUND, digits));
+    }
+
+    public Byn round(RoundMethod roundMethod, int roundDigits) {
+        return new Byn(this.value = roundMethod.rounding(this.value, roundDigits));
+    }
+
+    @Override
+    public String toString() {
+        return String.format(getRubs() + "." + value / 10 % 10 + value % 10);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,59 +84,5 @@ public class Byn implements Comparable<Byn> {
         return this.value - byn.value;
     }
 
-    @Override
-    public String toString() {
-        return getRubs() + "." + value / 10 % 10 + value % 10;
-    }
-
-    public Byn addition(Byn byn) {
-        this.value += byn.value;
-        return this;
-    }
-
-    public Byn subtraction(Byn byn) {
-        this.value -= byn.value;
-        return this;
-    }
-
-    public Byn multiply(int k) {
-        this.value *= k;
-        return this;
-    }
-
-    public Byn multiply(double k, RoundMethod roundMethod, int digits) {
-        this.value = roundMethod.rounding(this.value * k, digits);
-        return this;
-    }
-
-    public Byn multiply(double k, int digits) {
-        multiply(k, RoundMethod.ROUND, digits);
-        return this;
-    }
-
-    public Byn multiply(double k) {
-        multiply(k, RoundMethod.ROUND, 0);
-        return this;
-    }
-
-    public Byn multiply(double k, RoundMethod round) {
-        multiply(k, round, 0);
-        return this;
-    }
-
-    public Byn round(RoundMethod round) {
-        round(round,0);
-        return this;
-    }
-
-    public Byn round(int digits) {
-        round(RoundMethod.ROUND,digits);
-        return this;
-    }
-
-    public Byn round(RoundMethod roundMethod, int roundDigits) {
-        this.value = roundMethod.rounding(this.value, roundDigits);
-        return this;
-    }
 
 }

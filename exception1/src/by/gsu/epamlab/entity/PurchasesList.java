@@ -1,28 +1,15 @@
 package by.gsu.epamlab.entity;
 
+import by.gsu.epamlab.exceptions.WrongLineException;
+import by.gsu.epamlab.factories.PurchasesFactory;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import static by.gsu.epamlab.constants.PurchasesListConstants.*;
+
 public class PurchasesList {
-
-    private static final String PATH = "src/";
-    private static final String EXTENSION = ".csv";
-
-    private final static String INVALID_INDEX_ERROR_MEESAGE = "Error get Purchase: invalid index";
-    private final static String FILE_READER_ERROR_MESSAGE = "The file you are looking for does not exist.";
-    private final static String DELETING_INDEX_ERROR_MESSAGE = "Error get Purchase: invalid index";
-    private final static String TOTAL_COAST_PRINT_MESSAGE = "Total cost %22s\n";
-    private final static String FORMATTING_TABLE_PATTERN = "%-6s %5s %5s %5s %4s\n";
-    private final static String NAME_COLUME = "Name";
-    private final static String PRICE_COLUME = "Price";
-    private final static String NUMBER_COLUME = "Number";
-    private final static String DISCOUNT_COLUME = "Discount";
-    private final static String COST_COLUME = "Cost";
-
-    private static final int NUMBER_NULL = 0;
-    private static final int NUMBER_ONE = 1;
-    private static final int NUMBER_ONE_HUNDRED = 100;
 
     private List<Purchase> purchases;
 
@@ -41,7 +28,7 @@ public class PurchasesList {
                     purchases.add(purchase);
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (WrongLineException | FileNotFoundException e) {
             System.err.println(FILE_READER_ERROR_MESSAGE);
         }
     }
@@ -83,19 +70,15 @@ public class PurchasesList {
 
     public void delete(int index) {
         if (isInvalidIndex(index)) {
-            System.err.println(DELETING_INDEX_ERROR_MESSAGE);
             return;
         }
         purchases.remove(index);
     }
 
     public Purchase getPurchaseByIndex(int index) {
-
         if (isInvalidIndex(index)) {
-            System.err.println(INVALID_INDEX_ERROR_MEESAGE);
             return null;
         }
-
         return purchases.get(index);
     }
 

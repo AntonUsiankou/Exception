@@ -2,11 +2,10 @@ package by.gsu.epamlab.entity;
 
 import java.util.Formatter;
 
+import static by.gsu.epamlab.constants.PurchaseConstants.*;
+
 public class Purchase implements Comparable<Purchase> {
 
-    private static final String DELIMITER = ";";
-    private static final String HYPHEN = "-";
-    private static final String FORMATTER_PATTERN = "%-6s %5s %5s %8s %5s";
     private String name;
     private Byn price;
     private int number;
@@ -37,7 +36,6 @@ public class Purchase implements Comparable<Purchase> {
     protected String fieldsToString() {
         return name + DELIMITER + price + DELIMITER + number;
     }
-
 
     protected String getDiscount() {
         return HYPHEN;
