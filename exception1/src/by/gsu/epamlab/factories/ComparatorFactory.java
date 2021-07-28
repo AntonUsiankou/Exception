@@ -1,5 +1,6 @@
 package by.gsu.epamlab.factories;
 
+import by.gsu.epamlab.comparators.PurchaseComparatorOne;
 import by.gsu.epamlab.entity.Purchase;
 
 import java.lang.reflect.Constructor;
@@ -9,7 +10,16 @@ import static by.gsu.epamlab.constants.ComparatorFactoryConstants.*;
 
 public class ComparatorFactory {
 
-    public static Comparator<Purchase> getComparator(String comparatorVersion){
+    private static Comparator<Purchase> purchaseComparator;
+
+    private ComparatorFactory() {
+    }
+
+    public static Comparator<Purchase> getPurchaseComparator() {
+        return purchaseComparator;
+    }
+
+    public static void factoryPurchaseComparator(String comparatorVersion){
 
         Comparator<Purchase> comparator = null;
         try {
@@ -18,7 +28,7 @@ public class ComparatorFactory {
             comparator = (Comparator<Purchase>) constructor.newInstance();
         } catch (Exception e) {
             System.err.println(ERROR_CREATING_COMPARATOR_MESSAGE);
+            purchaseComparator = new PurchaseComparatorOne();
         }
-        return comparator;
     }
 }

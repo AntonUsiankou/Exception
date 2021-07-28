@@ -6,6 +6,9 @@ public class PriceDiscountPurchase extends Purchase {
 
     private Byn priceDiscount;
 
+    public PriceDiscountPurchase(){
+    }
+
     public PriceDiscountPurchase(String productName, int price, int numberUnits, int priceDiscount) {
         super(productName, price, numberUnits);
         setPriceDiscount(priceDiscount);

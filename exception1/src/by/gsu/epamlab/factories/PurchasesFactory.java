@@ -4,22 +4,16 @@ import by.gsu.epamlab.entity.PriceDiscountPurchase;
 import by.gsu.epamlab.entity.Purchase;
 import by.gsu.epamlab.exceptions.WrongLineException;
 
-import java.util.Scanner;
-
 import static by.gsu.epamlab.constants.PurchaseConstants.DELIMITER;
 import static by.gsu.epamlab.constants.PurchasesFactoryConstants.*;
 
 public class PurchasesFactory {
 
-    public static Purchase getPurchaseFromFactory(Scanner scanner) throws  WrongLineException {
-
-        String line = "";
-
-        Purchase purchase = null;
+    public static Purchase getPurchaseFromFactory(String line) throws  WrongLineException {
+        String[] elements = line.split(DELIMITER);
+        Purchase purchase = new Purchase();
 
         try {
-            line = scanner.next();
-            String[] elements = line.split(DELIMITER);
 
             if (elements.length > NUMBER_FOUR || elements.length < NUMBER_THREE) {
                 throw new WrongLineException(WRONG_NUM_ARG_MESSAGE);
@@ -62,15 +56,15 @@ public class PurchasesFactory {
                     }
                 }
                 if(price <= discount){
-                    throw new IllegalArgumentException(DISCOUNT_ERROR_MESSAGE);
+                    throw new WrongLineException(DISCOUNT_ERROR_MESSAGE);
                 }
                 purchase = new PriceDiscountPurchase(product, price, number, discount);
             } else {
                 purchase = new Purchase(product, price, number);
             }
 
-        } catch (IllegalArgumentException e) {
-            System.err.println(line + HYPHEN + e.getMessage());
+        } catch (RuntimeException e) {
+            throw new WrongLineException(line + HYPHEN + e.getMessage());
         }
 
         return purchase;

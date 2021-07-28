@@ -27,6 +27,8 @@ public class Runner {
 
         final int NUMBER_ONE = 1;
 
+        ComparatorFactory.factoryPurchaseComparator(COMPARATOR_VERSION);
+
         PurchasesList listIn = new PurchasesList(IN_FILE);
 
         System.out.println();
@@ -51,7 +53,7 @@ public class Runner {
         System.out.println();
         listIn.printList();
 
-        listIn.sort(ComparatorFactory.getComparator(COMPARATOR_VERSION));
+        listIn.sort();
 
         System.out.println();
         System.out.println(AFTER_SORTING_MESSAGE);
@@ -60,15 +62,9 @@ public class Runner {
 
         System.out.println();
         System.out.println(SEARCH_RESULT_MESSAGE);
-        System.out.println(search(INDEX_ONE,listIn,listAddon));
-        System.out.println(search(INDEX_THREE,listIn,listAddon));
+        listIn.search(listAddon.getPurchaseByIndex(INDEX_ONE));
+        listIn.search(listAddon.getPurchaseByIndex(INDEX_THREE));
 
     }
 
-    private static String search(int index, PurchasesList in, PurchasesList addon) {
-
-        int id = in.search(addon.getPurchaseByIndex(index));
-
-        return addon.getPurchaseByIndex(index) + (id >= NUMBER_NULL ? IS_FOUND_IN_POS_MESSAGE + id : IS_NOT_FOUND_MESSAGE);
-    }
 }

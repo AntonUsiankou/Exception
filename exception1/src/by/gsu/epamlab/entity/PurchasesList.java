@@ -1,12 +1,14 @@
 package by.gsu.epamlab.entity;
 
 import by.gsu.epamlab.exceptions.WrongLineException;
+import by.gsu.epamlab.factories.ComparatorFactory;
 import by.gsu.epamlab.factories.PurchasesFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
 
+import static by.gsu.epamlab.constants.PurchaseConstants.HYPHEN;
 import static by.gsu.epamlab.constants.PurchasesListConstants.*;
 
 public class PurchasesList {
@@ -23,12 +25,13 @@ public class PurchasesList {
         try (Scanner scanner = new Scanner(new FileReader(PATH + fileName + EXTENSION))) {
             scanner.useLocale(Locale.ENGLISH);
             while (scanner.hasNext()) {
-                Purchase purchase = PurchasesFactory.getPurchaseFromFactory(scanner);
-                if (purchase != null) {
-                    purchases.add(purchase);
+                try {
+                    purchases.add(PurchasesFactory.getPurchaseFromFactory(scanner.nextLine()));
+                } catch (WrongLineException e) {
+                    System.err.println(scanner.nextLine() + HYPHEN + e.getMessage());
                 }
             }
-        } catch (WrongLineException | FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.err.println(FILE_READER_ERROR_MESSAGE);
         }
     }
@@ -82,31 +85,17 @@ public class PurchasesList {
         return purchases.get(index);
     }
 
-    public void sort(Comparator<Purchase> comparator) {
-        purchases.sort(comparator);
+    public void sort() {
+        Collections.sort(purchases, ComparatorFactory.getPurchaseComparator());
     }
 
-    public int search(String productName, Byn price, int numberUnits) {
-        return search(productName, price, numberUnits, null);
-    }
+    public void search(Purchase purchase) {
 
-    public int search(Purchase purchase) {
-        return Collections.binarySearch(purchases, purchase, Collections.reverseOrder());
-    }
-
-    public int search(String productName, Byn price, int numberUnits, Byn discount) {
-
-        int priceCoins = price.getRubs() * NUMBER_ONE_HUNDRED + price.getCoins();
-
-        Purchase purchase;
-
-        if (discount != null) {
-            int discountCoins = discount.getRubs() * NUMBER_ONE_HUNDRED + discount.getCoins();
-            purchase = new PriceDiscountPurchase(productName, priceCoins, numberUnits, discountCoins);
+        int index = Collections.binarySearch(purchases, purchase, ComparatorFactory.getPurchaseComparator());
+        if (index < 0) {
+            System.out.println("Не найдено");
         } else {
-            purchase = new Purchase(productName, priceCoins, numberUnits);
+            System.out.println(" Покупка со спецификации найдена на " + index);
         }
-
-        return search(purchase);
     }
 }

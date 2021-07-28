@@ -10,6 +10,9 @@ public class Purchase implements Comparable<Purchase> {
     private Byn price;
     private int number;
 
+    public Purchase(){
+    }
+
     public Purchase(String name, int price, int number) {
         this.name = name;
         this.price = new Byn(price);
