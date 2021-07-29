@@ -1,18 +1,25 @@
-package by.gsu.epamlab.comparators;
+package by.gsu.epamlab.factories;
 
+import by.gsu.epamlab.comparators.PurchaseComparatorOne;
 import by.gsu.epamlab.entity.Purchase;
 
 import java.lang.reflect.Constructor;
 import java.util.Comparator;
 
+import static by.gsu.epamlab.constants.ComparatorFactoryConstants.*;
+
 public class ComparatorFactory {
 
+    private static Comparator<Purchase> purchaseComparator;
 
-    private static final String PACKAGE = "by.gsu.epamlab.comparators";
-    private static final String POINT = ".";
-    private static final String ERROR_CREATING_COMPARATOR_MESSAGE = "Error creating comparator";
+    private ComparatorFactory() {
+    }
 
-    public static Comparator<Purchase> getComparator(String comparatorVersion){
+    public static Comparator<Purchase> getPurchaseComparator() {
+        return purchaseComparator;
+    }
+
+    public static void factoryPurchaseComparator(String comparatorVersion){
 
         Comparator<Purchase> comparator = null;
         try {
@@ -21,7 +28,7 @@ public class ComparatorFactory {
             comparator = (Comparator<Purchase>) constructor.newInstance();
         } catch (Exception e) {
             System.err.println(ERROR_CREATING_COMPARATOR_MESSAGE);
+            purchaseComparator = new PurchaseComparatorOne();
         }
-        return comparator;
     }
 }
