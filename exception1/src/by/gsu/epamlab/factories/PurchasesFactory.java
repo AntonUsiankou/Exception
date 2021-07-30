@@ -50,9 +50,7 @@ public class PurchasesFactory {
             if(elements.length == NUMBER_THREE) {
                 purchase = new Purchase(product, price, number);
             }else if (elements.length == NUMBER_FOUR) {
-                //if (elements[FOURTH_POSITION].isEmpty()) {
-                //    throw new WrongLineException(EMPTY_DISCOUNT_MESSAGE);
-                // } else {
+               
                 int discount = Integer.parseInt(elements[FOURTH_POSITION]);
                 if (discount <= NUMBER_NULL) {
                     throw new WrongLineException(NON_POSITIVE_VALUE_HEAD + discount + TAIL_FOR_DISCOUNT);
@@ -60,7 +58,7 @@ public class PurchasesFactory {
                 if (price <= discount) {
                     throw new WrongLineException(DISCOUNT_ERROR_MESSAGE);
                 }
-                // }
+          
 
                 purchase = new PriceDiscountPurchase(product, price, number, discount);
             }
