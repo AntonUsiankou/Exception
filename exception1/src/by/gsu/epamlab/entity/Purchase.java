@@ -2,16 +2,15 @@ package by.gsu.epamlab.entity;
 
 import java.util.Formatter;
 
-public class Purchase {
-    private static final String HYPHEN = "-";
-    private static final String FORMATTER_PATTERN = "%-6s %5s %5s %8s %5s";
+import static by.gsu.epamlab.constants.Constants.*;
+
+public class Purchase implements Comparable<Purchase> {
+
     private String name;
     private Byn price;
     private int number;
 
-
     public Purchase() {
-        this.price = new Byn();
     }
 
     public Purchase(String name, int price, int number) {
@@ -20,55 +19,44 @@ public class Purchase {
         this.number = number;
     }
 
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Byn getPrice() {
         return price;
     }
 
-    public void setPrice(Byn price) {
-        this.price = price;
-    }
-
     public int getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-
-
     public Byn getCost() {
-        return new Byn(price).multiply(number);
-    }
-
-    public String print(){
-        Formatter formatter = new Formatter();
-        formatter.format(FORMATTER_PATTERN, getName(), getPrice(), getNumber(),getDiscount(), getCost());
-        return formatter.toString();
+        Byn cost = new Byn(price);
+        return cost.multiply(number);
     }
 
     protected String fieldsToString() {
-        return name + ";" + price + ";" + number;
+        return name + DELIMITER + price + DELIMITER + number;
     }
 
-    protected String getDiscount(){
-        return HYPHEN;
+    protected String getDiscount() {
+        return DASH;
     }
 
+    public String print() {
+        Formatter formatter = new Formatter();
+        formatter.format(FORMATTER_PATTERN, getName(), getPrice(), getNumber(), getDiscount(), getCost());
+        return formatter.toString();
+    }
+
+    public int compareTo(Purchase purchase) {
+        return purchase.getCost().compareTo(getCost());
+    }
 
     @Override
     public String toString() {
-        return fieldsToString() + ";" + getCost();
+        return fieldsToString() + DELIMITER + getCost();
     }
 
     @Override
@@ -80,7 +68,7 @@ public class Purchase {
         return name.equals(purchase.name) &&
                 price.equals(purchase.price);
     }
-
-
-
 }
+
+
+
